@@ -61,24 +61,43 @@ jobs:
         run: |
           python3 - <<'EOF'
           import os, re, subprocess, sys
+
+          MD = re.compile(r'\[([^\]]*)\]\(([^)]+)\)')
+          # GitHub renders raw HTML in Markdown, so <img src> and <a href> are
+          # just as user-visible as a Markdown link - and the pattern above is
+          # blind to them. Attribute values may be single- or double-quoted, and
+          # the tag may wrap across lines, which [^>] already spans.
+          HTML = re.compile(
+              r'<(?:img|a|source|video|audio|embed)\b[^>]*?'
+              r'\b(?:src|href|poster)\s*=\s*("[^"]*"|\'[^\']*\')',
+              re.IGNORECASE)
+          SKIP = ('http://', 'https://', 'mailto:', 'data:', 'tel:', '//', '#')
+
+          def targets(body):
+              for m in MD.finditer(body):
+                  yield 'md', m.group(2)
+              for m in HTML.finditer(body):
+                  yield 'html', m.group(1)[1:-1]
+
           files = subprocess.check_output(['git', 'ls-files', '*.md'], text=True).split()
-          bad = []
+          bad, checked = [], 0
           for f in files:
               with open(f, encoding='utf-8') as fh:
                   body = fh.read()
-              for m in re.finditer(r'\[([^\]]*)\]\(([^)]+)\)', body):
-                  target = m.group(2).split('#')[0].strip()
-                  if not target or target.startswith(('http://', 'https://', 'mailto:')):
+              for kind, raw in targets(body):
+                  target = raw.split('#')[0].strip()
+                  if not target or target.startswith(SKIP):
                       continue
+                  checked += 1
                   path = os.path.normpath(os.path.join(os.path.dirname(f), target))
                   if not os.path.exists(path):
-                      bad.append('%s -> %s' % (f, target))
+                      bad.append('%s -> %s (%s)' % (f, target, kind))
           if bad:
               print('Broken relative links:')
               for b in bad:
                   print('  ' + b)
               sys.exit(1)
-          print('All %d Markdown files have resolving relative links.' % len(files))
+          print('All %d relative targets in %d Markdown files resolve.' % (checked, len(files)))
           EOF
 
       - name: Check Markdown heading anchors resolve
@@ -116,8 +135,13 @@ jobs:
           for f in files:
               with open(f, encoding='utf-8') as fh:
                   body = fh.read()
-              for m in re.finditer(r'\[([^\]]*)\]\(([^)]+)\)', body):
-                  target = m.group(2).strip()
+              html = re.finditer(
+                  r'<(?:a|img|source)\b[^>]*?\b(?:href|src)\s*=\s*("[^"]*"|\'[^\']*\')',
+                  body, re.IGNORECASE)
+              raws = [m.group(2) for m in re.finditer(r'\[([^\]]*)\]\(([^)]+)\)', body)]
+              raws += [m.group(1)[1:-1] for m in html]
+              for raw in raws:
+                  target = raw.strip()
                   if target.startswith(('http://', 'https://', 'mailto:')) or '#' not in target:
                       continue
                   path, _, frag = target.partition('#')
