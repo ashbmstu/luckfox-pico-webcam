@@ -38,6 +38,16 @@ The field-of-view figure and the ISP scaling behaviour are also discussed in
 - A poor cable or an underpowered port can cause instability; prefer a rear
   motherboard port or a powered hub.
 
+<p align="center">
+  <img src="img/assembly.jpg" width="360"
+       alt="The SC3336 module held in a helping-hands clamp, its ribbon cable looping down to the board below">
+</p>
+
+<p align="center"><em>A bench setup during development: the module in the clamp,
+the FPC ribbon looping down to the board, which is wrapped against shorts at the
+lower jaw. A clamp stand is not required — it just makes the camera easy to aim
+while measuring.</em></p>
+
 ## Verifying the camera is wired correctly
 
 ```bash
