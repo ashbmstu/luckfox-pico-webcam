@@ -15,7 +15,8 @@ Everything from the sensor to the JPEG encoder runs inside the SoC's hardware
 pipeline. The CPU is nearly idle while streaming.
 
 <p align="center">
-  <img src="docs/img/sc3336-camera-module.jpg" alt="SC3336 camera module" width="420">
+  <img src="docs/img/assembly.jpg" width="340"
+       alt="The SC3336 module held in a helping-hands clamp, its ribbon cable looping down to the Luckfox Pico board below">
 </p>
 
 ## What you get
