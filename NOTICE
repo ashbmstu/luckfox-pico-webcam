@@ -1,0 +1,47 @@
+luckfox-pico-webcam
+Copyright (c) 2026 ash and contributors
+
+This project includes material from third parties. The notices below are
+provided for attribution. This file is not legal advice.
+
+---
+
+Rockchip reference sources (BSD option)
+
+The files ref/uvc-gadget.c and ref/uvc-gadget.h are reference sources from
+Rockchip Electronics Co., Ltd. They are carried in this repository unmodified
+for reference only and are not compiled into any binary. They were taken from
+the Luckfox Pico SDK, at project/app/uvc_app_tiny/uvc_app/uvc/, and both are
+byte-identical to that copy.
+
+Rockchip offers these files under a dual licence: GNU General Public License
+version 2, or a 3-clause BSD-style licence. This project relies on the BSD
+option for those reference files.
+
+Copyright (C) 2019 Rockchip Electronics Co., Ltd.
+
+---
+
+Linux kernel userspace API header
+
+The file ref/g_uvc.h is the Linux kernel's USB Video Class gadget userspace API
+header. It is carried in this repository unmodified for reference only. It was
+taken from the Luckfox Pico SDK's kernel tree, at
+sysdrv/source/kernel/include/uapi/linux/usb/g_uvc.h (Linux 5.10.160), and is
+byte-identical to that copy.
+
+It is licensed GPL-2.0+ WITH Linux-syscall-note. That exception exists so that
+userspace programs using kernel API headers are not themselves made subject to
+the GPL. The daemon in any case includes <linux/usb/g_uvc.h> from the toolchain
+sysroot rather than from ref/, so this copy is part of no build.
+
+Copyright (C) 2009-2010 Laurent Pinchart
+
+---
+
+Rockchip SDK libraries and services (not redistributed)
+
+The uvc_streamer daemon links against librockit, librockchip_mpp, and librga,
+and runs alongside the closed-source rkaiq_3A_server. These components ship
+with the Luckfox Pico vendor SDK and board image. They are not redistributed
+by this project. Their licensing terms are defined by Rockchip.

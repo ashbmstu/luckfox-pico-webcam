@@ -1,0 +1,83 @@
+name: Bug report
+description: Something is wrong on hardware or with a host application
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hardware bugs are easiest to reproduce with board, sensor, host, and log details.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you saw, including resolution and application if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: input
+    id: host-os
+    attributes:
+      label: Host OS
+      placeholder: e.g. Windows 11 23H2
+    validations:
+      required: true
+
+  - type: input
+    id: application
+    attributes:
+      label: Application
+      placeholder: e.g. OBS, Teams, browser, custom DirectShow app
+    validations:
+      required: true
+
+  - type: input
+    id: resolution
+    attributes:
+      label: Resolution in use
+      placeholder: e.g. 1280×720
+    validations:
+      required: true
+
+  - type: input
+    id: board
+    attributes:
+      label: Board revision
+      placeholder: e.g. Luckfox Pico Mini B
+    validations:
+      required: true
+
+  - type: input
+    id: sensor
+    attributes:
+      label: Sensor module
+      placeholder: e.g. SC3336
+    validations:
+      required: true
+
+  - type: textarea
+    id: uvc-log
+    attributes:
+      label: Contents of /tmp/uvc.log
+      description: Strongly encouraged — attach or paste the log from the board.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: dmesg
+    attributes:
+      label: adb shell dmesg | tail -50
+      description: Strongly encouraged — recent kernel messages from the board.
+      render: shell
+    validations:
+      required: false

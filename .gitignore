@@ -1,0 +1,32 @@
+utilites/
+models/
+inbox/
+*.img
+*.wsl
+*.zip
+*.7z
+
+# Build outputs
+*.o
+src/streamer/uvc_streamer
+
+# Captured test artefacts
+tools/test/*.jpg
+tools/test/*.png
+tools/measure/*.csv
+tools/measure/*.summary.txt
+tools/measure/ae-cycle-logs/
+tools/measure/boot-time.csv
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+.vscode/
+.idea/
+
+
+# Local history archive, not published
+archive/
